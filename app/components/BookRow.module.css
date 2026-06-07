@@ -1,0 +1,44 @@
+.bookRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  height: 96px;
+  padding: 4px 8px;
+
+  border-bottom: 1px solid #ddd;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.bookRow:hover {
+  background-color: #f5f5f5;
+}
+
+.bookCover {
+  width: 60px;
+  height: 90px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.bookTitle {
+  font-weight: 600;
+  min-width: 250px;
+}
+
+.bookAuthor {
+  color: #666;
+  min-width: 180px;
+}
+
+.bookYear {
+  color: #888;
+  width: 60px;
+}
+
+.bookIsbn {
+  color: #888;
+  font-size: 0.9rem;
+}
