@@ -1,0 +1,87 @@
+/* app/books/[bookslug]/OneBook.module.css */
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.bookHeader {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.cover {
+  width: 180px;
+  height: 270px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.bookInfo {
+  flex: 1;
+}
+
+.bookInfo h1 {
+  margin: 32px 0 8px;
+}
+
+.author {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.buttons {
+  margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.description {
+  line-height: 1.5;
+  margin: 24px 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 32px 0;
+  font-weight: 600;
+}
+
+.review {
+  display: grid;
+  grid-template-columns: 120px 40px 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0;
+}
+
+.tag,
+.tagSelected {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.tag {
+  border: 1px solid #bbb;
+  background: #f5f5f5;
+  color: #222;
+}
+
+.tagSelected {
+  border: 1px solid #3973c6;
+  background: #d8e8ff;
+  color: #164a91;
+}
