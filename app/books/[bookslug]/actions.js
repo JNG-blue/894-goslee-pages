@@ -83,3 +83,31 @@ export async function addToRead(formData) {
 
   redirect("/books?type=toread");
 }
+
+export async function markRead(formData) {
+  const bookId = Number(formData.get("bookId"));
+  const rating = Number(formData.get("rating"));
+  const review = formData.get("review")?.toString().trim() || null;
+
+  const db = new Database("./data/app.db");
+
+  db.prepare(
+    `
+  INSERT INTO ratings (
+    user_id,
+    book_id,
+    rating,
+    review,
+    readstatus
+  )
+  VALUES (?, ?, ?, ?, ?)
+  ON CONFLICT(user_id, book_id)
+  DO UPDATE SET
+    rating = excluded.rating,
+    review = excluded.review,
+    readstatus = excluded.readstatus,
+    created_at = CURRENT_TIMESTAMP
+`
+  ).run(1, bookId, rating, review, 1);
+  redirect("/books?type=library");
+}

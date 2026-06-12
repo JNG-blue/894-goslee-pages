@@ -1,7 +1,8 @@
 import Database from "better-sqlite3";
 import styles from "./OneBook.module.css";
 import AddTagButton from "/project/workspace/app/components/AddTagButton";
-import { addToRead, addUserTag } from "./actions";
+import ReadBookModal from "/project/workspace/app/components/ReadBookModal.js";
+import { addToRead, addUserTag, markRead } from "./actions";
 
 export default function OneBook({ params }) {
   const db = new Database("./data/app.db");
@@ -46,6 +47,35 @@ export default function OneBook({ params }) {
     )
     .all(book.id);
 
+  const reviews = db
+    .prepare(
+      `
+    SELECT
+      u.display_name,
+      u.username,
+      r.rating,
+      r.review,
+      r.created_at
+    FROM ratings r
+    JOIN users u ON u.id = r.user_id
+    WHERE r.book_id = ?
+      AND r.review IS NOT NULL
+      AND TRIM(r.review) != ''
+    ORDER BY r.created_at DESC
+  `
+    )
+    .all(book.id);
+  const averageRating = db
+    .prepare(
+      `
+    SELECT AVG(rating) AS average_rating
+    FROM ratings
+    WHERE book_id = ?
+      AND rating IS NOT NULL
+  `
+    )
+    .get(book.id);
+  console.log(averageRating);
   return (
     <main className={styles.page}>
       <section className={styles.bookHeader}>
@@ -62,7 +92,7 @@ export default function OneBook({ params }) {
           <p className={styles.author}>{book.author}</p>
 
           <div className={styles.buttons}>
-            <button>I've Read This Book</button>
+            <ReadBookModal book={book} markRead={markRead} />
             <form action={addToRead}>
               <input type="hidden" name="bookId" value={book.id} />
 
@@ -94,26 +124,28 @@ export default function OneBook({ params }) {
       </section>
 
       <section className={styles.stats}>
-        <div>{book.average_rating ?? "—"} Reviews</div>
+        <div>{averageRating.average_rating ?? "—"} Average Rating</div>
+        <div>
+          {" "}
+          {reviews.length} Review{reviews.length === 1 ? "" : "s"}
+        </div>
         <div>22 Book Clubs have read this book</div>
       </section>
 
-      <section className={styles.reviews}>
-        <div className={styles.review}>
-          <strong>Reviewer</strong>
-          <span>7</span>
-          <p>text text text</p>
-        </div>
-
-        <div className={styles.review}>
-          <strong>Reviewer</strong>
-          <span>9</span>
-          <p>
-            liked the book a lot hated the book said lots. Limit review to 200
-            or so words.
-          </p>
-        </div>
-      </section>
+      {reviews.length > 0 && (
+        <section className={styles.reviews}>
+          {reviews.map((review) => (
+            <div
+              className={styles.review}
+              key={`${review.username}-${review.created_at}`}
+            >
+              <strong>{review.display_name ?? review.username}</strong>
+              <span>{review.rating}</span>
+              <p>{review.review}</p>
+            </div>
+          ))}
+        </section>
+      )}
     </main>
   );
 }
