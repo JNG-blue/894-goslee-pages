@@ -34,10 +34,14 @@ export default function Header() {
 
       <nav className={styles.nav}>
         <Link href="/bookclubs">Clubs</Link>
-        <Link href="/books?type=library">Library</Link>
-        <Link href="/books?type=toread">To-Read</Link>
+        <Link href="/books?type=library" prefetch={false}>
+          Library
+        </Link>
+        <a href="/books?type=toread">To-Read</a>
         <Link href="/friends">Friends</Link>
-        <Link href="/books?type=browse">Browse</Link>
+        <Link href="/books?type=browse" prefetch={false}>
+          Browse
+        </Link>
       </nav>
     </header>
   );

@@ -1,0 +1,41 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 32px;
+}
+
+.content {
+  text-align: center;
+}
+
+.content h1 {
+  font-size: 3rem;
+}
+
+.sidebar {
+  border: 1px solid #5a5363;
+  border-radius: 12px;
+  padding: 20px;
+  height: fit-content;
+  background: #2d2733;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+.loginButton,
+.createButton {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 12px;
+  border-radius: 999px;
+  border: 1px solid #d8d2e2;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.createButton {
+  background: transparent;
+  color: inherit;
+}

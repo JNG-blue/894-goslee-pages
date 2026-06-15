@@ -1,6 +1,15 @@
 import Database from "better-sqlite3";
 import BookRow from "/project/workspace/app/components/BookRow.js";
 
+import { cookies } from "next/headers";
+import {
+  getCurrentUserId,
+  getCurrentUserName,
+} from "/project/workspace/app/actions.js";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 type Book = {
   id: number;
   title: string;
@@ -11,7 +20,11 @@ type Book = {
   pub_year: number | null;
 };
 
-function getBooks(type: string, query: string = ""): Book[] {
+export async function getBooks(
+  type: string,
+  query: string = "",
+  userId
+): Book[] {
   const db = new Database("./data/app.db");
 
   const baseSelect = `
@@ -42,11 +55,11 @@ function getBooks(type: string, query: string = ""): Book[] {
       ${baseSelect}
       JOIN ratings r ON r.book_id = b.id
       WHERE r.user_id = ?
-        AND r.readstatus = ?
+        AND r.readstatus = 2
       ORDER BY r.created_at desc
     `
       )
-      .all(1, 2) as Book[]; //readstatus 2 indicates toreadbooks
+      .all(userId) as Book[]; //readstatus 2 indicates toreadbooks
   }
 
   if (type === "library") {
@@ -56,11 +69,11 @@ function getBooks(type: string, query: string = ""): Book[] {
       ${baseSelect}
       JOIN ratings r ON r.book_id = b.id
       WHERE r.user_id = ?
-        AND r.readstatus = ?
+        AND r.readstatus = 1
       ORDER BY r.created_at desc
     `
       )
-      .all(1, 1) as Book[]; //readstatus 2 indicates toreadbooks
+      .all(userId) as Book[]; //readstatus 2 indicates toreadbooks
   }
 
   return db
@@ -73,16 +86,23 @@ function getBooks(type: string, query: string = ""): Book[] {
     .all() as Book[];
 }
 
-export default function BooksPage({ searchParams }) {
-  const type = searchParams.type ?? "browse";
-  const query = searchParams.query ?? "";
-  const books = getBooks(type, query);
-  console.log(books.length);
+export default async function BooksPage({ searchParams }) {
+  const params = await searchParams;
+
+  const type = params.type ?? "browse";
+  console.log("type ", type);
+  const query = params.query ?? "";
+  const userId = await getCurrentUserId();
+  const books = await getBooks(type, query, userId);
+  const username = await getCurrentUserName();
+  const cookieStore = await cookies();
+  console.log(cookieStore.get("user_id"));
+  console.log("Books.length", books.length);
 
   return (
     <main>
       <h1>
-        {type} Books {query}
+        {type} Books {query} {username}
       </h1>
 
       <div>

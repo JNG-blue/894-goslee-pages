@@ -6,8 +6,14 @@ import Database from "better-sqlite3";
 import { redirect } from "next/navigation";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import {
+  getCurrentUserId,
+  getCurrentUserName,
+} from "/project/workspace/app/actions.js";
 
 export async function addUserTag(formData) {
+  const userId = await getCurrentUserId();
   const bookId = Number(formData.get("bookId"));
   const tagName = formData.get("tagName");
   console.log(bookId, tagName);
@@ -51,7 +57,7 @@ export async function addUserTag(formData) {
     )
     VALUES (?, ?, ?)
   `
-  ).run(bookId, tagId, 1);
+  ).run(bookId, tagId, userId);
 
   console.log(bookId, tagId, 1, tagName);
 
@@ -61,6 +67,7 @@ export async function addUserTag(formData) {
 
 export async function addToRead(formData) {
   const bookId = Number(formData.get("bookId"));
+  const userId = await getCurrentUserId();
 
   const db = new Database("./data/app.db");
 
@@ -75,7 +82,7 @@ export async function addToRead(formData) {
     VALUES (?, ?, ?, ?)
   `
   ).run(
-    1, // hardcoded user for now
+    userId,
     bookId,
     null,
     2 // Want to Read
@@ -88,6 +95,7 @@ export async function markRead(formData) {
   const bookId = Number(formData.get("bookId"));
   const rating = Number(formData.get("rating"));
   const review = formData.get("review")?.toString().trim() || null;
+  const userId = await getCurrentUserId();
 
   const db = new Database("./data/app.db");
 
@@ -108,6 +116,6 @@ export async function markRead(formData) {
     readstatus = excluded.readstatus,
     created_at = CURRENT_TIMESTAMP
 `
-  ).run(1, bookId, rating, review, 1);
+  ).run(userId, bookId, rating, review, 1);
   redirect("/books?type=library");
 }
