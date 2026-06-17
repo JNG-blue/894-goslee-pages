@@ -1,0 +1,29 @@
+.clubRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  color: inherit;
+  text-decoration: none;
+}
+
+.clubRow:hover {
+  background: #f7f7f7;
+}
+
+.clubRow h2 {
+  margin: 0 0 4px;
+}
+
+.clubRow p {
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  white-space: nowrap;
+}
