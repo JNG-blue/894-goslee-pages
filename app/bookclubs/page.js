@@ -18,7 +18,7 @@ function getBookClubs() {
         SELECT 1
         FROM bookclub_members bcm2
         WHERE bcm2.bookclub_id = bc.id
-          AND bcm2.user_id = 4
+          AND bcm2.user_id = ${user_id}
       ) AS is_member
     
     FROM bookclubs bc
