@@ -2,10 +2,13 @@ import Database from "better-sqlite3";
 import Link from "next/link";
 import styles from "./ClubPage.module.css";
 import { joinClub, leaveClub } from "./actions";
+import { getCurrentUser } from "/project/workspace/app/actions.js";
 
-export default function OneClub({ params }) {
+export default async function OneClub({ params }) {
   const db = new Database("./data/app.db");
-  const user_id = 4;
+  const user = await getCurrentUser();
+  const user_id = user?.id ?? user.id ?? 0;
+  console.log(user);
 
   const club = db
     .prepare(
@@ -81,6 +84,7 @@ export default function OneClub({ params }) {
             {club.public
               ? "This is a public group."
               : "This is a private group."}
+            {isMember ? "You are in this group." : "You are not in this group."}
           </p>
 
           <p className={styles.description}>

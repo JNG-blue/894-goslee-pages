@@ -1,9 +1,11 @@
 import Database from "better-sqlite3";
 import ClubRow from "../components/ClubRow";
+import { getCurrentUser } from "../actions";
 
-function getBookClubs() {
+async function getBookClubs() {
   const db = new Database("./data/app.db");
-  const user_id = 4;
+  const user = await getCurrentUser();
+  const user_id = user?.id ?? user.id ?? 0;
   return db
     .prepare(
       `
@@ -18,7 +20,7 @@ function getBookClubs() {
         SELECT 1
         FROM bookclub_members bcm2
         WHERE bcm2.bookclub_id = bc.id
-          AND bcm2.user_id = ${user_id}
+          AND bcm2.user_id = ?
       ) AS is_member
     
     FROM bookclubs bc
@@ -32,11 +34,11 @@ function getBookClubs() {
       bc.name ASC;
   `
     )
-    .all();
+    .all(user_id);
 }
 
-export default function BookClubsPage() {
-  const clubs = getBookClubs();
+export default async function BookClubsPage() {
+  const clubs = await getBookClubs();
 
   return (
     <main>
