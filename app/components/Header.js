@@ -4,8 +4,9 @@ import Link from "next/link";
 import styles from "./Header.module.css";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { FaEnvelope } from "react-icons/fa";
 
-export default function Header() {
+export default function Header({ user }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -22,14 +23,26 @@ export default function Header() {
           PAGES
         </Link>
 
-        <form onSubmit={handleSubmit}>
-          <input
-            className={styles.search}
-            placeholder="Search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </form>
+        <div className={styles.searchArea}>
+          <div className={styles.userBar}>
+            <Link href="/profile" className={styles.username}>
+              {user?.display_name ?? user?.username ?? "Sign in"}
+            </Link>
+            <Link href="/messages" className={styles.mail}>
+              <FaEnvelope />
+              <span className={styles.badge}>3</span>
+            </Link>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <input
+              className={styles.search}
+              placeholder="Search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </form>
+        </div>
       </div>
 
       <nav className={styles.nav}>

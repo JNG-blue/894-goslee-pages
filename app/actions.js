@@ -1,4 +1,3 @@
-// app/actions.js or app/login/actions.js
 "use server";
 
 import Database from "better-sqlite3";
@@ -42,34 +41,32 @@ export async function loginUser(formData) {
   console.log("cookies after set", cookieStore.getAll());
   redirect("/books?type=library");
 }
-
-export async function getCurrentUserName() {
-  const cookieStore = await cookies();
-  const userId = cookieStore.get("user_id")?.value;
-
-  if (!userId) return "NO USER";
-
-  const db = new Database("./data/app.db");
-
-  const row = db
-    .prepare(
-      `
-      SELECT username
-      FROM users
-      WHERE id = ?
-    `
-    )
-    .get(userId);
-
-  return row?.username ?? "NO USER";
-}
-
 export async function getCurrentUserId() {
   const cookieStore = await cookies();
   const userId = cookieStore.get("user_id")?.value;
-  console.log("cookies on book page", cookieStore.get("user_id"));
 
   return userId ? Number(userId) : null;
+}
+export async function getCurrentUser() {
+  const userId = await getCurrentUserId();
+
+  if (!userId) return null;
+
+  const db = new Database("./data/app.db");
+
+  return db
+    .prepare(
+      `
+    SELECT
+      id,
+      username,
+      display_name,
+      email
+    FROM users
+    WHERE id = ?
+  `
+    )
+    .get(userId);
 }
 
 export async function createUser(formData) {
