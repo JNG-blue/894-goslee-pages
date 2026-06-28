@@ -42,6 +42,7 @@ export async function loginUser(formData) {
   redirect("/books?type=library");
 }
 export async function getCurrentUserId() {
+  return 4;
   const cookieStore = await cookies();
   const userId = cookieStore.get("user_id")?.value;
 
@@ -49,7 +50,7 @@ export async function getCurrentUserId() {
 }
 export async function getCurrentUser() {
   //const userId = await getCurrentUserId();
-  const userId = 15;
+  const userId = 4;
 
   if (!userId) return null;
 

@@ -25,10 +25,10 @@ export default function Header({ user }) {
 
         <div className={styles.searchArea}>
           <div className={styles.userBar}>
-            <Link href="/profile" className={styles.username}>
+            <Link href="/invitations" className={styles.username}>
               {user?.display_name ?? user?.username ?? "Sign in"}
             </Link>
-            <Link href="/messages" className={styles.mail}>
+            <Link href="/invitations" className={styles.mail}>
               <FaEnvelope />
               <span className={styles.badge}>3</span>
             </Link>
