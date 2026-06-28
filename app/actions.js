@@ -48,7 +48,8 @@ export async function getCurrentUserId() {
   return userId ? Number(userId) : null;
 }
 export async function getCurrentUser() {
-  const userId = await getCurrentUserId();
+  //const userId = await getCurrentUserId();
+  const userId = 15;
 
   if (!userId) return null;
 

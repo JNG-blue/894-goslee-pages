@@ -96,6 +96,8 @@ export default async function OneClub({ params }) {
           {!isMember && (
             <form action={joinClub}>
               <input type="hidden" name="clubId" value={club.id} />
+              <input type="hidden" name="isPublic" value={club.public} />
+              <input type="hidden" name="user_id" value={user_id} />
               <button className={styles.clubButton}>Join Club</button>
             </form>
           )}
