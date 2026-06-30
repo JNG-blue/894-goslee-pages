@@ -4,7 +4,7 @@ import BookRow from "/project/workspace/app/components/BookRow.js";
 import { cookies } from "next/headers";
 import {
   getCurrentUserId,
-  getCurrentUserName,
+  getCurrentUser,
 } from "/project/workspace/app/actions.js";
 
 export const dynamic = "force-dynamic";
@@ -94,7 +94,6 @@ export default async function BooksPage({ searchParams }) {
   const query = params.query ?? "";
   const userId = await getCurrentUserId();
   const books = await getBooks(type, query, userId);
-  const username = await getCurrentUserName();
   const cookieStore = await cookies();
   console.log(cookieStore.get("user_id"));
   console.log("Books.length", books.length);
@@ -102,7 +101,7 @@ export default async function BooksPage({ searchParams }) {
   return (
     <main>
       <h1>
-        {type} Books {query} {username}
+        {type} Books {query}
       </h1>
 
       <div>
