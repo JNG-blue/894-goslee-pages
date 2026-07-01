@@ -4,6 +4,9 @@ import Database from "better-sqlite3";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "/project/workspace/app/actions.js";
 
+
+
+
 export async function joinClub(formData) {
   const clubId = Number(formData.get("clubId"));
   const userId = Number(formData.get("user_id"));

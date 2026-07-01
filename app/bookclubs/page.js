@@ -2,6 +2,7 @@ import Database from "better-sqlite3";
 import ClubRow from "../components/ClubRow";
 import { getCurrentUser } from "../actions";
 
+
 async function getBookClubs() {
   const db = new Database("./data/app.db");
   const user = await getCurrentUser();

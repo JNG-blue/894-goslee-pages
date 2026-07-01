@@ -49,27 +49,34 @@ export default async function OneClub({ params }) {
 
   const isMember = members.some((member) => member.id === user_id);
 
-  const fakeMessages = [
-    {
-      type: "Upcoming",
-      title: "Dragon Fairy Something by Gregg",
-      date: "1/1/2027",
-      body: "Our next meeting will be to discuss Dragon Fairy Something by Gregg. Chapters 1–10 for now!",
-    },
-    {
-      type: "Past",
-      title: "Piranesi by Suzanne Price",
-      date: "6/4/2026",
-      body: "This event has passed. This chat thread is archived.",
-    },
-    {
-      type: "Discussion",
-      title: "2027 Book Club Reading Suggestions",
-      date: "2/20/2026",
-      body: "Drop your suggestions for what we should read in 2027.",
-    },
-  ];
-
+  const messages = db
+    .prepare(
+      `
+  SELECT
+    mt.id,
+    mt.title,
+    mt.body,
+    mt.location,
+    mt.meeting_time,
+    mt.pinned,
+    mt.created_at,
+    mt.book_id,
+    b.title AS book_title,
+    b.cover_url,
+    u.username,
+    u.display_name
+  FROM message_threads mt
+  LEFT JOIN books b ON b.id = mt.book_id
+  JOIN users u ON u.id = mt.created_by_user_id
+  WHERE mt.bookclub_id = ?
+  ORDER BY
+    mt.pinned DESC,
+    mt.meeting_time IS NULL,
+    mt.meeting_time ASC,
+    mt.created_at DESC
+`
+    )
+    .all(club.id);
   return (
     <main className={styles.page}>
       <Link href="/bookclubs" className={styles.backLink}>
@@ -119,15 +126,34 @@ export default async function OneClub({ params }) {
 
       <section className={styles.messages}>
         <h2>Messages and Meetings</h2>
+        <Link
+          href={`/bookclubs/${club.id}/newthread`}
+          className={styles.clubButton}
+        >
+          New Message
+        </Link>
+        <hr />
 
-        {fakeMessages.map((message) => (
-          <article key={message.title} className={styles.messageRow}>
+        {messages.map((message) => (
+          <Link
+            href={`/bookclubs/${club.id}/${message.id}`}
+            className={styles.messageRow}
+            key={message.id}
+          >
             <div className={styles.messageIcon}>
-              {message.type === "Upcoming"
-                ? "📌"
-                : message.type === "Past"
-                ? "📘"
-                : "💬"}
+              {message.cover_url ? (
+                <img
+                  src={message.cover_url}
+                  alt={message.book_title}
+                  className={styles.bookCover}
+                />
+              ) : message.pinned ? (
+                "📌"
+              ) : message.meeting_time ? (
+                "📘"
+              ) : (
+                ""
+              )}
             </div>
 
             <div className={styles.messageBody}>
@@ -136,7 +162,7 @@ export default async function OneClub({ params }) {
               <p className={styles.date}>{message.date}</p>
               <p>{message.body}</p>
             </div>
-          </article>
+          </Link>
         ))}
       </section>
       {isMember && (
