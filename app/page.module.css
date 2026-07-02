@@ -39,3 +39,8 @@
   background: transparent;
   color: inherit;
 }
+
+.sidebar a,
+.sidebar a:visited {
+  color: white;
+}
