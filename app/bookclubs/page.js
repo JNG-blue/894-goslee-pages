@@ -1,7 +1,8 @@
 import Database from "better-sqlite3";
 import ClubRow from "../components/ClubRow";
 import { getCurrentUser } from "../actions";
-
+import Link from "next/link";
+import styles from "/project/workspace/app/bookclubs/[clubslug]/ClubPage.module.css";
 
 async function getBookClubs() {
   const db = new Database("./data/app.db");
@@ -48,6 +49,12 @@ export default async function BookClubsPage() {
       {clubs.map((club) => (
         <ClubRow key={club.id} club={club} />
       ))}
+      <div>
+        <Link href="/bookclubs/newclub" className={styles.clubButton}>
+          {" "}
+          Create a New Club
+        </Link>
+      </div>
     </main>
   );
 }
