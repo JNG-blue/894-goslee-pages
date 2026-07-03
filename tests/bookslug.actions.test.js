@@ -1,4 +1,8 @@
-import { describe, it, expect, afterEach } from "vitest";
+import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
+vi.mock("/project/workspace/app/actions.js", () => ({
+  getCurrentUserId: vi.fn(async () => 3),
+}));
+
 import Database from "better-sqlite3";
 import {
   addToRead,
@@ -7,7 +11,7 @@ import {
 } from "../app/books/[bookslug]/actions.js";
 
 const db = new Database("./data/app.db");
-const TEST_USER_ID = 0;
+const TEST_USER_ID = 3;
 const TEST_BOOK_TITLE = "__TEST_BOOK__";
 
 function makeTestBook() {
@@ -96,7 +100,7 @@ describe("book actions against real db", () => {
       .get(bookId);
 
     expect(row).toMatchObject({
-      user_id: 1,
+      user_id: TEST_USER_ID,
       book_id: bookId,
       rating: 9,
       review: "Loved it.",
@@ -160,15 +164,15 @@ describe("book actions against real db", () => {
       JOIN tags t ON t.id = bt.tag_id
       WHERE bt.book_id = ?
         AND t.name = ?
-        AND bt.user_id = 1
+        AND bt.user_id = ?
     `
       )
-      .get(bookId, tagName);
+      .get(bookId, tagName, TEST_USER_ID);
 
     expect(row).toMatchObject({
       title: "__TEST_BOOK__",
       name: tagName,
-      user_id: 1,
+      user_id: TEST_USER_ID,
     });
   });
 
@@ -196,10 +200,10 @@ describe("book actions against real db", () => {
       JOIN tags t ON t.id = bt.tag_id
       WHERE bt.book_id = ?
         AND t.name = ?
-        AND bt.user_id = 1
+        AND bt.user_id = ?
     `
       )
-      .get(bookId, tagName);
+      .get(bookId, tagName, TEST_USER_ID);
 
     expect(row.count).toBe(1);
   });
