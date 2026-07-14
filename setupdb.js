@@ -13,27 +13,30 @@ CREATE TABLE IF NOT EXISTS users (
   username TEXT NOT NULL UNIQUE,
   email TEXT NOT NULL UNIQUE,
   display_name TEXT,
+  password_hash TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS books (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT NOT NULL,
-  author TEXT,
+  author TEXT NOT NULL DEFAULT 'Unknown Author',
+  openlibrary_engagement INTEGER,
   isbn TEXT UNIQUE,
+  pub_year INTEGER,
   description TEXT,
   cover_url TEXT,
-  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  average_rating REAL,
+  UNIQUE (title, author)
 );
 
 CREATE TABLE IF NOT EXISTS bookclubs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   description TEXT,
-  owner_user_id INTEGER NOT NULL,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-  FOREIGN KEY (owner_user_id) REFERENCES users(id) ON DELETE CASCADE
+  public INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS bookclub_members (
@@ -51,9 +54,10 @@ CREATE TABLE IF NOT EXISTS ratings (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   book_id INTEGER NOT NULL,
-  rating INTEGER NOT NULL CHECK (rating BETWEEN 1 AND 10),
+  rating INTEGER CHECK (rating BETWEEN 1 AND 10),
   review TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  readstatus INTEGER,
 
   UNIQUE (user_id, book_id),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -113,16 +117,27 @@ CREATE TABLE IF NOT EXISTS goals (
 );
 
 CREATE TABLE IF NOT EXISTS friends (
-  requester_user_id INTEGER NOT NULL,
-  addressee_user_id INTEGER NOT NULL,
-  status TEXT NOT NULL DEFAULT 'pending',
+  user_id INTEGER NOT NULL,
+  subscription_id INTEGER NOT NULL,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (requester_user_id, addressee_user_id),
-  FOREIGN KEY (requester_user_id) REFERENCES users(id) ON DELETE CASCADE,
-  FOREIGN KEY (addressee_user_id) REFERENCES users(id) ON DELETE CASCADE,
-  CHECK (requester_user_id != addressee_user_id),
-  CHECK (status IN ('pending', 'accepted', 'blocked'))
+  PRIMARY KEY (user_id, subscription_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (subscription_id) REFERENCES users(id) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS invitations (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  type TEXT,
+  status TEXT,
+  from_user_id INTEGER NOT NULL,
+  to_user_id INTEGER NOT NULL,
+  bookclub_id INTEGER,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  responded_at TEXT,
+
+  FOREIGN KEY (from_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (to_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (bookclub_id) REFERENCES bookclubs(id) ON DELETE CASCADE
 );
 `);
 
