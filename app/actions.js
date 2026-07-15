@@ -42,7 +42,7 @@ export async function loginUser(formData) {
   redirect("/books?type=library");
 }
 export async function getCurrentUserId() {
-  return 3;
+  return 4;
   const cookieStore = await cookies();
   const userId = cookieStore.get("user_id")?.value;
 
