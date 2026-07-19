@@ -26,7 +26,7 @@ async function getFriends(search = "") {
          AND f.subscription_id = u.id
         LEFT JOIN ratings r
           ON r.user_id = u.id
-         AND r.readstatus = 2
+         AND r.readstatus = 1
         WHERE u.id != ?
           AND u.username LIKE ?
         GROUP BY u.id, u.username, u.email, u.display_name, f.subscription_id
@@ -51,7 +51,7 @@ async function getFriends(search = "") {
         ON u.id = f.subscription_id
       LEFT JOIN ratings r
         ON r.user_id = u.id
-       AND r.readstatus = 2
+       AND r.readstatus = 1
       WHERE f.user_id = ?
       GROUP BY u.id, u.username, u.email, u.display_name
       ORDER BY u.id;
