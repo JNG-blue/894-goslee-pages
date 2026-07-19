@@ -52,7 +52,9 @@ export default async function Home() {
 
   return (
     <main className={styles.page}>
+    
       <section className={styles.content}>
+        <h2>Activity</h2>
           {ratings.map((book) => (
             <FrontBook key={book.rating_id} book={book} />
           ))}
