@@ -25,7 +25,7 @@ export default function Header({ user }) {
 
         <div className={styles.searchArea}>
           <div className={styles.userBar}>
-            <Link href="/invitations" className={styles.username}>
+            <Link href={user?.id ? `/user/${user.id}` : "/"} className={styles.username}>
               {user?.display_name ?? user?.username ?? "Sign in"}
             </Link>
             <Link href="/invitations" className={styles.mail}>
