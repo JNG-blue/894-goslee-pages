@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, afterAll, vi } from "vitest";
 import Database from "better-sqlite3";
-import { addThreadMessage } from "/project/workspace/app/bookclubs/[clubslug]/[threadslug]/actions.js";
-vi.mock("/project/workspace/app/actions.js", () => ({
+import { addThreadMessage } from "@/app/bookclubs/[clubslug]/[threadslug]/actions.js";
+vi.mock("@/app/actions.js", () => ({
   getCurrentUserId: vi.fn(async () => 3),
 }));
 

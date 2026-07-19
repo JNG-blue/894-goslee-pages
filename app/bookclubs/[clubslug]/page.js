@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import Link from "next/link";
 import styles from "./ClubPage.module.css";
 import { joinClub, leaveClub } from "./actions";
-import { getCurrentUser } from "/project/workspace/app/actions.js";
+import { getCurrentUser } from "@/app/actions.js";
 
 export default async function OneClub({ params }) {
   const db = new Database("./data/app.db");

@@ -10,7 +10,7 @@ import { cookies } from "next/headers";
 import {
   getCurrentUserId,
   getCurrentUserName,
-} from "/project/workspace/app/actions.js";
+} from "@/app/actions.js";
 
 export async function addUserTag(formData) {
   const userId = await getCurrentUserId();

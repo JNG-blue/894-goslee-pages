@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import FriendRow from "../components/FriendRow";
 import { getCurrentUser } from "../actions";
-import styles from "/project/workspace/app/bookclubs/[clubslug]/ClubPage.module.css";
+import styles from "@/app/bookclubs/[clubslug]/ClubPage.module.css";
 
 async function getFriends(search = "") {
   const db = new Database("./data/app.db");

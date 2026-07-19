@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import {
   joinClub,
   leaveClub,
-} from "/project/workspace/app/bookclubs/[clubslug]/actions.js";
+} from "@/app/bookclubs/[clubslug]/actions.js";
 
 const db = new Database("./data/app.db");
 

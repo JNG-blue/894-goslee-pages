@@ -1,11 +1,11 @@
 import Database from "better-sqlite3";
-import BookRow from "/project/workspace/app/components/BookRow.js";
+import BookRow from "@/app/components/BookRow.js";
 
 import { cookies } from "next/headers";
 import {
   getCurrentUserId,
   getCurrentUser,
-} from "/project/workspace/app/actions.js";
+} from "@/app/actions.js";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;

@@ -1,7 +1,7 @@
 import styles from "./page.module.css";
 import Database from "better-sqlite3";
 import { acceptInvitation, rejectInvitation } from "./actions.js";
-import { getCurrentUserId } from "/project/workspace/app/actions.js";
+import { getCurrentUserId } from "@/app/actions.js";
 
 const db = new Database("./data/app.db");
 

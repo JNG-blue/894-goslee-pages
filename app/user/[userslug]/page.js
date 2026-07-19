@@ -1,9 +1,9 @@
 // app/[userslug]/id/page.jsx
 
 import Database from "better-sqlite3";
-import { getCurrentUser } from "/project/workspace/app/actions.js";
+import { getCurrentUser } from "@/app/actions.js";
 import styles from "./page.module.css";
-import { toggleFollow } from "/project/workspace/app/user/[userslug]/actions.js";
+import { toggleFollow } from "@/app/user/[userslug]/actions.js";
 
 const db = new Database("./data/app.db");
 

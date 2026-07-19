@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import {
   acceptInvitation,
   rejectInvitation,
-} from "/project/workspace/app/invitations/actions.js";
+} from "@/app/invitations/actions.js";
 
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),

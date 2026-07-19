@@ -2,7 +2,7 @@
 
 import Database from "better-sqlite3";
 import { redirect } from "next/navigation";
-import { getCurrentUserId } from "/project/workspace/app/actions.js";
+import { getCurrentUserId } from "@/app/actions.js";
 
 export async function addThreadMessage(formData) {
   const clubId = Number(formData.get("clubId"));

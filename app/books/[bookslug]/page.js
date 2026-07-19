@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import styles from "./OneBook.module.css";
-import AddTagButton from "/project/workspace/app/components/AddTagButton";
-import ReadBookModal from "/project/workspace/app/components/ReadBookModal.js";
+import AddTagButton from "@/app/components/AddTagButton";
+import ReadBookModal from "@/app/components/ReadBookModal.js";
 import { addToRead, addUserTag, markRead } from "./actions";
 
 

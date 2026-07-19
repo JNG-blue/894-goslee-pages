@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import Database from "better-sqlite3";
-import { createClub } from "/project/workspace/app/bookclubs/newclub/actions.js";
-vi.mock("/project/workspace/app/actions.js", () => ({
+import { createClub } from "@/app/bookclubs/newclub/actions.js";
+vi.mock("@/app/actions.js", () => ({
   getCurrentUserId: vi.fn(async () => 3),
 }));
 

@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
-vi.mock("/project/workspace/app/actions.js", () => ({
+vi.mock("@/app/actions.js", () => ({
   getCurrentUserId: vi.fn(async () => 3),
 }));
 

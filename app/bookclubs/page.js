@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import ClubRow from "../components/ClubRow";
 import { getCurrentUser } from "../actions";
 import Link from "next/link";
-import styles from "/project/workspace/app/bookclubs/[clubslug]/ClubPage.module.css";
+import styles from "@/app/bookclubs/[clubslug]/ClubPage.module.css";
 
 async function getBookClubs() {
   const db = new Database("./data/app.db");

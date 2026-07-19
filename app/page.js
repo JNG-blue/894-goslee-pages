@@ -6,8 +6,8 @@ import {
   loginUser,
   createUser,
   getCurrentUserId,
-} from "/project/workspace/app/actions.js";
-import NewUserModal from "/project/workspace/app/components/NewUserModal.js";
+} from "@/app/actions.js";
+import NewUserModal from "@/app/components/NewUserModal.js";
 import Link from "next/link";
 
 export default async function Home() {

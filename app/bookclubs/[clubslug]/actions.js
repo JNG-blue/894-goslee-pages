@@ -2,7 +2,7 @@
 
 import Database from "better-sqlite3";
 import { redirect } from "next/navigation";
-import { getCurrentUser } from "/project/workspace/app/actions.js";
+import { getCurrentUser } from "@/app/actions.js";
 
 
 
