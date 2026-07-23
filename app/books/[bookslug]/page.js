@@ -3,10 +3,16 @@ import styles from "./OneBook.module.css";
 import AddTagButton from "@/app/components/AddTagButton";
 import ReadBookModal from "@/app/components/ReadBookModal.js";
 import { addToRead, addUserTag, markRead } from "./actions";
+import {
+  getCurrentUserId,
+  getCurrentUser,
+} from "@/app/actions.js";
 
 
-export default function OneBook({ params }) {
+export default async function OneBook({ params }) {
   const db = new Database("./data/app.db");
+   const { bookslug } = await params;
+   const userId = await getCurrentUserId();
 
   const book = db
     .prepare(
@@ -21,7 +27,7 @@ export default function OneBook({ params }) {
     GROUP BY b.id
 `
     )
-    .get(params.bookslug);
+    .get(bookslug);
 
   if (!book) {
     return <main>Book not found</main>;
@@ -41,12 +47,12 @@ export default function OneBook({ params }) {
   LEFT JOIN book_tags user_bt
     ON user_bt.book_id = bt.book_id
    AND user_bt.tag_id = bt.tag_id
-   AND user_bt.user_id = 1
+   AND user_bt.user_id = ?
   WHERE bt.book_id = ?
   ORDER BY t.name
 `
     )
-    .all(book.id);
+    .all(userId, book.id);
 
   const reviews = db
     .prepare(
