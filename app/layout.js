@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { getCurrentUser } from "./actions";
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header user={user} />
         {children}
+        <Footer user={user} />
       </body>
     </html>
   );
