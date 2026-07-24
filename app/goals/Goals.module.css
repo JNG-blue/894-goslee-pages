@@ -1,0 +1,139 @@
+.page {
+  padding: 24px;
+}
+
+.topGrid {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 24px;
+  align-items: start;
+}
+
+.completedSection h1,
+.historySection h2 {
+  margin: 0 0 16px;
+}
+
+.bookGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.bookCard {
+  min-width: 0;
+}
+
+.bookCard img,
+.coverFallback {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.coverFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-align: center;
+  background: #f4f4f4;
+  font-size: 13px;
+}
+
+.bookTitle {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.bookAuthor {
+  margin-top: 2px;
+  font-size: 13px;
+  color: #666;
+}
+
+.goalCounter {
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 18px;
+  text-align: center;
+}
+
+.counterText {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.counterText form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.goalInput {
+  width: 95px;
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.saveButton {
+  border: 1px solid #111;
+  border-radius: 4px;
+  background: white;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.historySection {
+  margin-top: 32px;
+}
+
+.historyRows {
+  border-top: 1px solid #ddd;
+}
+
+.historyRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 760px) {
+  .topGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .historyRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+.saveButton {
+  transition:
+    transform 120ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.saveButton:active {
+  transform: scale(0.94);
+  background: #111;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.12);
+}
+.saveButton:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(17, 17, 17, 0.18);
+}
