@@ -41,6 +41,20 @@ export async function loginUser(formData) {
   console.log("cookies after set", cookieStore.getAll());
   redirect("/books?type=library");
 }
+
+export async function getInvitationCount(userId){
+    if (!userId) return null;
+
+  const db = new Database("./data/app.db");
+  return db.prepare(        `
+        SELECT COUNT(*) AS count
+        FROM invitations
+        WHERE to_user_id = ?
+          AND status = 'pending'
+        `).get(userId)?.count ?? "*"
+
+}
+
 export async function getCurrentUserId() {
   return 4;
   const cookieStore = await cookies();

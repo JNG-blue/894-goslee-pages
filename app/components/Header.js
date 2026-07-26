@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
 
-export default function Header({ user }) {
+export default function Header({ user, invitationCount }) {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
@@ -30,7 +30,7 @@ export default function Header({ user }) {
             </Link>
             <Link href="/invitations" className={styles.mail}>
               <FaEnvelope />
-              <span className={styles.badge}>3</span>
+              <span className={styles.badge}>{invitationCount > 0 ? invitationCount : "*"}</span>
             </Link>
           </div>
 
