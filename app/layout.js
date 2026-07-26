@@ -9,7 +9,9 @@ export const metadata = {
 };
 
 const user = await getCurrentUser();
-const invitationCount = await getInvitationCount(user.id);
+const invitationCount = user?.id
+  ? await getInvitationCount(user.id)
+  : null;
 console.log("layout.js L13",user, invitationCount);
 
 export default function RootLayout({ children }) {

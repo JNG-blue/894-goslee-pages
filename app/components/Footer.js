@@ -39,12 +39,18 @@ export default async function Footer({ user }) {
 
   return (
     <footer className={styles.footer}>
-      <Link href="/goals" className={styles.goalButton}>
+  <Link href="/goals" className={styles.goalButton}>
+    {goal ? (
+      <>
         <span className={styles.progress}>
-          {year} {booksRead?.count ?? 0}/{goal?.target_books ?? 0}
+          {year} {booksRead?.count ?? 0}/{goal.target_books}
         </span>
         <span className={styles.label}>books read</span>
-      </Link>
+      </>
+    ) : (
+      <span className={styles.progress}>Set Goals</span>
+    )}
+  </Link>
     </footer>
   );
 }
