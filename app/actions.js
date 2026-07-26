@@ -56,14 +56,14 @@ export async function getInvitationCount(userId){
 }
 
 export async function getCurrentUserId() {
-  return 4;
+
   const cookieStore = await cookies();
   const userId = cookieStore.get("user_id")?.value;
 
   return userId ? Number(userId) : null;
 }
 export async function getCurrentUser() {
-  //const userId = await getCurrentUserId();
+
   const userId = await getCurrentUserId();
 
   if (!userId) return null;

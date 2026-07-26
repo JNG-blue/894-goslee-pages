@@ -9,30 +9,39 @@ const db = new Database("./data/app.db");
 
 const TEST_USER_ID = 3;
 const TEST_PREFIX = "__TEST_THREAD_MESSAGE__";
+const TEST_CLUB_NAME = "This is a test club";
 
 let testClubId = null;
 let testThreadId = null;
 
-function makeTestClub() {
+function makeTestClub(isPublic) {
   const result = db
     .prepare(
       `
       INSERT INTO bookclubs (
         name,
         description,
-        owner_user_id
+        public
       )
       VALUES (?, ?, ?)
       `
     )
-    .run(
-      `${TEST_PREFIX}_CLUB`,
-      "Temporary club for integration testing",
-      TEST_USER_ID
-    );
+    .run(TEST_CLUB_NAME, "Temporary Vitest club", isPublic);
 
-  testClubId = Number(result.lastInsertRowid);
-  return testClubId;
+  const clubId = Number(result.lastInsertRowid);
+
+  db.prepare(
+    `
+    INSERT INTO bookclub_members (
+      bookclub_id,
+      user_id,
+      role
+    )
+    VALUES (?, ?, ?)
+    `
+  ).run(clubId, TEST_USER_ID, "admin");
+
+  return clubId;
 }
 
 function makeTestThread(clubId) {

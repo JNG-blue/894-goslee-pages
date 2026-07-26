@@ -22,13 +22,12 @@ function makeTestClub() {
       INSERT INTO bookclubs (
         name,
         description,
-        owner_user_id,
         public
       )
-      VALUES (?, ?, ?, ?)
+      VALUES (?, ?, ?)
       `
     )
-    .run(TEST_CLUB_NAME, "Temporary invitation test club", TEST_ADMIN_ID, 0);
+    .run(TEST_CLUB_NAME, "Temporary invitation test club",  0);
 
   return Number(result.lastInsertRowid);
 }
@@ -139,7 +138,7 @@ describe("invitation actions against real db", () => {
       )
       .get(invitationId);
 
-    expect(invitation.status).toBe("declined");
+    expect(invitation.status).toBe("rejected");
     expect(invitation.responded_at).not.toBeNull();
 
     const membership = db

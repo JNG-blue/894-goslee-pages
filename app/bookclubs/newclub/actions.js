@@ -21,13 +21,12 @@ export async function createClub(formData) {
     INSERT INTO bookclubs (
       name,
       description,
-      public,
-      owner_user_id
+      public
     )
-    VALUES (?, ?, ?, ?)
+    VALUES (?, ?, ?)
   `
     )
-    .run(name, description, isPrivate ? 0 : 1, userId);
+    .run(name, description, isPrivate ? 0 : 1);
 
   const clubId = result.lastInsertRowid;
 

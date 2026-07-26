@@ -3,7 +3,7 @@ import Database from "better-sqlite3";
 import {
   joinClub,
   leaveClub,
-} from "@/app/bookclubs/[clubslug]/actions.js";
+} from "../app/bookclubs/[clubslug]/actions.js";
 
 const db = new Database("./data/app.db");
 
@@ -18,13 +18,12 @@ function makeTestClub(isPublic) {
       INSERT INTO bookclubs (
         name,
         description,
-        owner_user_id,
         public
       )
-      VALUES (?, ?, ?, ?)
+      VALUES (?, ?, ?)
       `
     )
-    .run(TEST_CLUB_NAME, "Temporary Vitest club", TEST_ADMIN_ID, isPublic);
+    .run(TEST_CLUB_NAME, "Temporary Vitest club", isPublic);
 
   const clubId = Number(result.lastInsertRowid);
 

@@ -19,15 +19,27 @@ function makeTestClub() {
       INSERT INTO bookclubs (
         name,
         description,
-        owner_user_id,
         public
       )
-      VALUES (?, ?, ?, ?)
+      VALUES (?, ?, ?)
       `
     )
-    .run(TEST_CLUB_NAME, "Temporary club for thread tests", TEST_USER_ID, 1);
+    .run(TEST_CLUB_NAME, "Temporary club for thread tests", 1);
 
-  return Number(result.lastInsertRowid);
+  const clubId = Number(result.lastInsertRowid);
+
+  db.prepare(
+    `
+    INSERT INTO bookclub_members (
+      bookclub_id,
+      user_id,
+      role
+    )
+    VALUES (?, ?, ?)
+    `
+  ).run(clubId, TEST_USER_ID, "admin");
+
+  return clubId;
 }
 
 function makeTestBook() {
