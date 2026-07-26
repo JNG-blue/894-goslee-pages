@@ -70,6 +70,10 @@ CREATE TABLE IF NOT EXISTS message_threads (
   book_id INTEGER,
   title TEXT NOT NULL,
   created_by_user_id INTEGER NOT NULL,
+  location TEXT,
+  pinned INTEGER NOT NULL DEFAULT 0,
+  meeting_time TEXT,
+  body TEXT,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
   FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE,
