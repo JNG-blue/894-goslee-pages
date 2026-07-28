@@ -31,8 +31,13 @@ export async function getBooks(
 
   const offset = (page - 1) * pageSize;
 
+const ratingSelect =
+  type === "library"
+    ? "r.rating AS average_rating"
+    : "b.average_rating AS average_rating";
+
   const baseSelect = `
-    SELECT b.id, b.title, b.author, b.average_rating, b.cover_url, b.pub_year, b.openlibrary_engagement
+    SELECT b.id, b.title, b.author, ${ratingSelect}, b.cover_url, b.pub_year, b.openlibrary_engagement
     FROM books b
   `;
 
