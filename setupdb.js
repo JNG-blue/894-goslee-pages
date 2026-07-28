@@ -8,6 +8,16 @@ const db = new Database("data/app.db");
 db.pragma("foreign_keys = ON");
 
 db.exec(`
+CREATE TABLE IF NOT EXISTS user_tag_preferences (
+  user_id INTEGER NOT NULL,
+  tag_id INTEGER NOT NULL,
+  preference INTEGER NOT NULL CHECK (preference IN (-1, 1)),
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (user_id, tag_id),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+);
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT NOT NULL UNIQUE,
