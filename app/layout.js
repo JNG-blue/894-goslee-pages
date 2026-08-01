@@ -8,17 +8,16 @@ export const metadata = {
   description: "Pages is for readers",
 };
 
-const user = await getCurrentUser();
-const invitationCount = user?.id
-  ? await getInvitationCount(user.id)
-  : null;
-console.log("layout.js L13",user, invitationCount);
+export default async function RootLayout({ children }) {
+  const user = await getCurrentUser();
+  const invitationCount = user?.id
+    ? await getInvitationCount(user.id)
+    : null;
 
-export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header user={user} invitationCount = {invitationCount} />
+        <Header user={user} invitationCount={invitationCount} />
         {children}
         <Footer user={user} />
       </body>

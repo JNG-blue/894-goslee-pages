@@ -4,6 +4,7 @@ This page returns a list of books. Either a list of books read, a list of books 
 import styles from "./page.module.css";
 import Database from "better-sqlite3";
 import FrontBook from "@/app/components/FrontBook";
+import RecommendationBox from "@/app/components/RecommendationBox";
 
 import {
   loginUser,
@@ -60,10 +61,11 @@ export default async function Home() {
           ))}
       </section>
       {userId ? (
-        <aside className={styles.sidebar}>
-          <h2>Welcome back!</h2>
-          <Link href="/books?type=library">Go to your library</Link>
-        </aside>
+<aside className={styles.sidebar}>
+  <h2>Welcome back!</h2>
+  <Link href="/books?type=library">Go to your library</Link>
+  <RecommendationBox userId={userId} />
+</aside>
       ) : (
         <aside className={styles.sidebar}>
           <h2>Sign In</h2>
