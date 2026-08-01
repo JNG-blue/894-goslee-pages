@@ -1,9 +1,10 @@
 // app/[userslug]/id/page.jsx
 
 import Database from "better-sqlite3";
-import { getCurrentUser } from "@/app/actions.js";
+import { getCurrentUser, getCurrentUserId } from "@/app/actions.js";
 import styles from "./page.module.css";
 import { toggleFollow } from "@/app/user/[userslug]/actions.js";
+import TagBox from "@/app/components/TagBox";
 
 const db = new Database("./data/app.db");
 
@@ -92,10 +93,41 @@ async function getUserReadBooks(userId, page = 1, pageSize = 25) {
     .all(userId, pageSize, offset);
 }
 
+  const TopTags = [
+    'history', "children's fiction", 'new york times bestseller' , 'juvenile fiction',  'biography',
+    'fantasy','science fiction', 'nonfiction','magic','psychology',
+    'science','philosophy','american literature','drama','literature',
+    'english literature','friendship', 'women','classic literature','families',
+    ];
+
+function getInitialTagPreferences(userId) {
+  if (!userId) return {};
+
+  const db = new Database("./data/app.db");
+
+  const rows = db
+    .prepare(`
+      SELECT tags.name, user_tag_preferences.preference
+      FROM user_tag_preferences
+      JOIN tags ON tags.id = user_tag_preferences.tag_id
+      WHERE user_tag_preferences.user_id = ?
+    `)
+    .all(userId);
+
+  const topTagSet = new Set(TopTags);
+
+  return Object.fromEntries(
+    rows
+      .filter((row) => topTagSet.has(row.name))
+      .map((row) => [row.name, row.preference])
+  );
+}
+
 export default async function UserIdPage({ params }) {
   const me = await getCurrentUser();
   const user = await getUserProfile(params.userslug, me?.id);
   const readBooks = await getUserReadBooks(user.id);
+  const initialPreferences = getInitialTagPreferences(me.id);
 
   return (
     <main className={styles.page}>
@@ -140,6 +172,9 @@ export default async function UserIdPage({ params }) {
           </p>
         </aside>
       </section>
+                  {user.isOwnProfile ? (
+             <section>        <TagBox initialPreferences={initialPreferences}/></section>
+            ) : (" ")}
 
       <section className={styles.booksSection}>
         {!user.isOwnProfile && !user.isPublic && !user.viewerFollows ? (

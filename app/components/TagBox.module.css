@@ -1,0 +1,42 @@
+.tagBox {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.tagButton {
+  min-width: 0;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  background: #eeeeee;
+  color: #333;
+  padding: 0.5rem 0.35rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.tagButton:hover {
+  border-color: #777;
+}
+
+.tagButton:disabled {
+  cursor: wait;
+  opacity: 0.8;
+}
+
+.liked {
+  border-color: #1d4ed8;
+  background: #2563eb;
+  color: white;
+}
+
+.disliked {
+  border-color: #b91c1c;
+  background: #dc2626;
+  color: white;
+}
