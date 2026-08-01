@@ -5,6 +5,8 @@ export function getRecommendedBookIds(userId, limit = 24) {
 
   db.exec(`DROP TABLE IF EXISTS scored_books;`);
 
+  //Step 1 & 2
+
   db.exec(`
     CREATE TEMP TABLE scored_books AS
     WITH ranked_books AS (
@@ -30,7 +32,7 @@ export function getRecommendedBookIds(userId, limit = 24) {
     JOIN ranked_books rb
       ON rb.id = b.id;
   `);
-
+  //Step 2
   db.prepare(`
     DELETE FROM scored_books
     WHERE id IN (
@@ -39,7 +41,7 @@ export function getRecommendedBookIds(userId, limit = 24) {
       WHERE user_id = ?
     );
   `).run(userId);
-
+ //Step 4
   db.prepare(`
     UPDATE scored_books
     SET friend_boost = 4
@@ -52,7 +54,7 @@ export function getRecommendedBookIds(userId, limit = 24) {
       WHERE f.user_id = ?
     );
   `).run(userId);
-
+//Step 5 Boost Authors
   db.prepare(`
     UPDATE scored_books
     SET author_boost = author_boost * 4
@@ -66,7 +68,7 @@ export function getRecommendedBookIds(userId, limit = 24) {
         AND r.rating > 6
     );
   `).run(userId);
-
+//Step 6 Deboost Authors
   db.prepare(`
     UPDATE scored_books
     SET author_boost = author_boost * 0.4

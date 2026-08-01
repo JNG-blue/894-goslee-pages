@@ -6,12 +6,16 @@ import styles from "./RecommendationBox.module.css";
 export default async function RecommendedBooksSidebar({ userId }) {
   if (!userId) return null;
 
-  const recommendedIds = (await getRecommendedBookIds(userId)).slice(0, 6);
+const recommendedIds = await getRecommendedBookIds(userId);
 
-  if (recommendedIds.length === 0) return null;
+const sidebarRecommendedIds = recommendedIds
+  .toSorted(() => Math.random() - 0.5)
+  .slice(0, 6);
+
+  if (sidebarRecommendedIds.length === 0) return null;
 
   const db = new Database("./data/app.db");
-  const placeholders = recommendedIds.map(() => "?").join(",");
+  const placeholders = sidebarRecommendedIds.map(() => "?").join(",");
 
   const books = db
     .prepare(`
@@ -19,10 +23,10 @@ export default async function RecommendedBooksSidebar({ userId }) {
       FROM books
       WHERE id IN (${placeholders})
     `)
-    .all(...recommendedIds);
+    .all(...sidebarRecommendedIds);
 
   const booksById = new Map(books.map((book) => [book.id, book]));
-  const orderedBooks = recommendedIds
+  const orderedBooks = sidebarRecommendedIds
     .map((id) => booksById.get(id))
     .filter(Boolean);
 
