@@ -34,13 +34,16 @@ export async function getRecentFriendRatings(userId) {
       FROM ratings
       JOIN books ON books.id = ratings.book_id
       JOIN users ON users.id = ratings.user_id
-      WHERE
-        ratings.user_id = ?
-        OR ratings.user_id IN (
-          SELECT subscription_id
-          FROM friends
-          WHERE user_id = ?
-        )
+WHERE
+  (
+    ratings.user_id = ?
+    OR ratings.user_id IN (
+      SELECT subscription_id
+      FROM friends
+      WHERE user_id = ?
+    )
+  )
+  AND ratings.readstatus = 1
       ORDER BY ratings.created_at DESC
       LIMIT 40
     `)

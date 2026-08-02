@@ -82,14 +82,14 @@ export function getRecommendedBookIds(userId, limit = 24) {
         AND r.rating < 5
     );
   `).run(userId);
-
+// keep only the 1000 top books before tag step
   db.exec(`
     DELETE FROM scored_books
     WHERE id NOT IN (
       SELECT id
       FROM scored_books
       ORDER BY score * friend_boost * author_boost DESC
-      LIMIT 500
+      LIMIT 1000
     );
   `);
 
