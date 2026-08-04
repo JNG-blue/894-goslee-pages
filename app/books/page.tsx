@@ -37,7 +37,7 @@ const ratingSelect =
     : "b.average_rating AS average_rating";
 
   const baseSelect = `
-    SELECT b.id, b.title, b.author, ${ratingSelect}, b.cover_url, b.pub_year, b.openlibrary_engagement
+    SELECT distinct b.id, b.title, b.author, ${ratingSelect}, b.cover_url, b.pub_year, b.openlibrary_engagement
     FROM books b
   `;
 
@@ -46,15 +46,22 @@ const ratingSelect =
   let orderSql = "order by b.openlibrary_engagement DESC, b.title ASC";
   let args: any[] = [];
 
-  if (type === "search" && query.trim()) {
-    const search = `%${query.trim()}%`;
-    whereSql = `
-      WHERE b.title LIKE ?
-         OR b.author LIKE ?
-         OR b.description LIKE ?
-    `;
-    args = [search, search, search];
-  }
+if (type === "search" && query.trim()) {
+  const search = `%${query.trim()}%`;
+
+  joinSql = `
+    LEFT JOIN book_tags bt ON bt.book_id = b.id
+    LEFT JOIN tags t ON t.id = bt.tag_id
+  `;
+
+  whereSql = `
+    WHERE b.title LIKE ?
+       OR b.author LIKE ?
+       OR t.name LIKE ?
+  `;
+
+  args = [search, search, search];
+}
 
   if (type === "toread") {
     joinSql = "JOIN ratings r ON r.book_id = b.id";
