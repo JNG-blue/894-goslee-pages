@@ -24,17 +24,22 @@ export default function ReadBookModal({ book, markRead }) {
 
             <form action={markRead}>
               <input type="hidden" name="bookId" value={book.id} />
-
-              <label>
-                Rating
-                <select name="rating" required>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-                    <option key={n} value={n}>
-                      {n} ★
-                    </option>
-                  ))}
-                </select>
-              </label>
+<fieldset>
+  <legend>Rating</legend>
+  1
+  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+    <label key={n}>
+      <input
+        type="radio"
+        name="rating"
+        value={n}
+        required
+        defaultChecked={n === 5}
+      />
+    
+    </label>
+  ))}10
+</fieldset>
 
               <label>
                 Review
