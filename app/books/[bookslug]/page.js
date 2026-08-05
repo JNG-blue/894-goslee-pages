@@ -8,11 +8,34 @@ import {
   getCurrentUser,
 } from "@/app/actions.js";
 
+function recalculateBookAverageRating(bookId) {
+    const db = new Database("./data/app.db");
+  const result = db
+    .prepare(
+      `
+      SELECT ROUND(AVG(rating), 1) AS average_rating
+      FROM ratings
+      WHERE book_id = ?
+        AND rating IS NOT NULL
+      `
+    )
+    .get(bookId);
 
+  db.prepare(
+    `
+    UPDATE books
+    SET average_rating = ?
+    WHERE id = ?
+    `
+  ).run(result.average_rating, bookId);
+
+  return result.average_rating;
+}
 export default async function OneBook({ params }) {
   const db = new Database("./data/app.db");
    const { bookslug } = await params;
    const userId = await getCurrentUserId();
+   const a = recalculateBookAverageRating(bookslug);
 
   const book = db
     .prepare(
@@ -103,7 +126,7 @@ export default async function OneBook({ params }) {
             <form action={addToRead}>
               <input type="hidden" name="bookId" value={book.id} />
 
-              <button type="submit">Want to Read</button>
+              <button type="submit" className="primaryButton">Want to Read</button>
             </form>
           </div>
         </div>
