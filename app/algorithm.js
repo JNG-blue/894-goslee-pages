@@ -117,7 +117,7 @@ export function getRecommendedBookIds(userId, limit = 24) {
 
   db.prepare(`
     UPDATE scored_books
-    SET tag_boost = tag_boost * 0.8
+    SET tag_boost = tag_boost * 0.7
     WHERE id IN (
       SELECT DISTINCT bt.book_id
       FROM book_tags bt

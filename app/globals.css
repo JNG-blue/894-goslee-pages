@@ -11,14 +11,17 @@
   --color-brown:  #5b4638;
   --color-brown-muted: #5b4638;
 
-  --color-lavender: #b9a7e8;
-  --color-lavender-soft: #eee8ff;
+  --color-lavender: #8c7ab8;
+  --color-lavender-soft:  #aaa0cc;
 
   --text-primary: var(--color-brown);
   --text-muted: var(--color-brown-muted);
   --surface-page: var(--color-manila-soft);
   --surface-panel: var(--color-manila);
   --accent: var(--color-lavender);
+  --color-teal: #4f8f8a;
+--color-teal-soft: #d8ece9;
+--color-teal-dark: #3f7470;
 }
 
 html {
@@ -48,7 +51,7 @@ main img {
 h1 {
   font-size: 3rem;
   margin: 3rem auto;
-  color: #ede9f3;
+  color: var(--accent);
   font-family: "Poppins", sans-serif;
 }
 
@@ -92,4 +95,87 @@ input[type="search"] {
   border-radius: 10px;
   padding: 0 14px;
   font: inherit;
+}
+
+.button {
+  background: var(--color-teal);
+  color: var(--color-manila);
+  border: 1px solid var(--color-teal-dark);
+  width: 100%;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.button:hover {
+  background: var(--color-teal-dark);
+}
+
+/* globals.css */
+.primaryButton {
+  background: var(--color-teal);
+  color: var(--color-manila);
+  border: 1px solid var(--color-teal-dark);
+  border: 1px solid #111;
+  border-radius: 4px;
+  padding: 6px 14px;
+  text-decoration: none;
+}
+
+
+.primaryButton:hover {
+  background: #f2f2f2;
+  color:var(--color-teal);
+}
+
+.bookGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.bookCard {
+  min-width: 0;
+}
+
+.bookCard img,
+.coverFallback {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.coverFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-align: center;
+  background: #f4f4f4;
+  font-size: 13px;
+}
+
+.bookTitle {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.bookAuthor {
+  margin-top: 2px;
+  font-size: 13px;
+  color: #666;
+}
+
+.tagButton {
+  border: 1px solid var(--border-muted);
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: var(--surface-muted);
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
 }

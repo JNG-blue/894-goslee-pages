@@ -139,9 +139,10 @@ export default async function OneBook({ params }) {
 
             <button
               type="submit"
-              className={
-                Number(tag.selected) === 1 ? styles.tagSelected : styles.tag
-              }
+              className={[
+              "tagButton",
+              Number(tag.selected) === 1 ? styles.tagSelected : "",
+            ].join(" ")}
             >
               {tag.name}
             </button>

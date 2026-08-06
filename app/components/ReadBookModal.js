@@ -7,7 +7,7 @@ export default function ReadBookModal({ book, markRead }) {
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)}>
+      <button type="button" className="primaryButton" onClick={() => setOpen(true)}>
         I've Read This Book
       </button>
 

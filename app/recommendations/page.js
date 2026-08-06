@@ -49,7 +49,7 @@ export default async function RecommendationsPage() {
     <main className={styles.page}>
       <h1>Recommendations</h1>
 
-      <section className={styles.grid}>
+      <section className="bookGrid">
         {orderedBooks.map((book) => (
           <article key={book.id} className={styles.book}>
             <div className={styles.coverWrap}>

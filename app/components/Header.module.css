@@ -18,9 +18,7 @@
   text-decoration: none;
 }
 
-.search {
-  width: 140px;
-}
+
 
 .nav {
   display: flex;
@@ -73,14 +71,14 @@
 }
 
 .username {
-  color: #2563eb;
+  color: var(--color-lavender);
   text-decoration: none;
   font-weight: 600;
 }
 
 .mail {
   position: relative;
-  color: #2563eb;
+  color: var(--color-lavender);
   text-decoration: none;
   display: inline-flex;
   align-items: center;

@@ -105,7 +105,7 @@ export default async function OneClub({ params }) {
               <input type="hidden" name="clubId" value={club.id} />
               <input type="hidden" name="isPublic" value={club.public} />
               <input type="hidden" name="user_id" value={user_id} />
-              <button className={styles.clubButton}>Join Club</button>
+              <button className="primaryButton">Join Club</button>
             </form>
           )}
           <h2>Members ({members.length})</h2>
@@ -128,7 +128,7 @@ export default async function OneClub({ params }) {
         <h2>Messages and Meetings</h2>
         <Link
           href={`/bookclubs/${club.id}/newthread`}
-          className={styles.clubButton}
+          className="primaryButton"
         >
           New Message
         </Link>
@@ -168,7 +168,7 @@ export default async function OneClub({ params }) {
       {isMember && (
         <form action={leaveClub}>
           <input type="hidden" name="clubId" value={club.id} />
-          <button className={styles.clubButton}>Leave This Group</button>
+          <button className="primaryButton">Leave This Group</button>
         </form>
       )}
     </main>

@@ -39,7 +39,7 @@ export default async function Footer({ user }) {
 
   return (
     <footer className={styles.footer}>
-  <Link href="/goals" className={styles.goalButton}>
+  <Link href="/goals" className="primaryButton">
     {goal ? (
       <>
         <span className={styles.progress}>

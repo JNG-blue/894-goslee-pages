@@ -50,7 +50,7 @@ export default async function BookClubsPage() {
         <ClubRow key={club.id} club={club} />
       ))}
       <div>
-        <Link href="/bookclubs/newclub" className={styles.clubButton}>
+        <Link href="/bookclubs/newclub" className="primaryButton">
           {" "}
           Create a New Club
         </Link>

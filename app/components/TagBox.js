@@ -5,9 +5,9 @@ import { updateTagPreference } from "./actions.js";
 import styles from "./TagBox.module.css";
 
   const TopTags = [
-    'history', "children's fiction", 'new york times bestseller' , 'juvenile fiction',  'biography',
+    'history', "children's fiction", 'new york times bestseller' , 'mystery',  'biography',
     'fantasy','science fiction', 'nonfiction','magic','psychology',
-    'science','philosophy','american literature','drama','literature',
+    'science','philosophy','american literature','romance','literature',
     'english literature','friendship', 'women','classic literature','families',
     ];
 
@@ -47,7 +47,7 @@ export default function TagBox({ initialPreferences = {} }) {
               type="button"
               disabled={isPending}
               className={[
-                styles.tagButton,
+                "tagButton",
                 preference === 1 ? styles.liked : "",
                 preference === -1 ? styles.disliked : "",
               ].join(" ")}

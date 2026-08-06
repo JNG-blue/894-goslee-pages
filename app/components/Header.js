@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import styles from "./Header.module.css";
+import globalstyles from "@/app/globals.css"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
@@ -37,6 +38,7 @@ export default function Header({ user, invitationCount }) {
           <form onSubmit={handleSubmit}>
             <input
               className={styles.search}
+              type="search"
               placeholder="Search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}

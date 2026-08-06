@@ -102,7 +102,7 @@ export default async function ThreadPage({ params }) {
             required
           />
 
-          <button type="submit">Reply</button>
+          <button type="submit" className="primaryButton">Reply</button>
         </form>
       </section>
 

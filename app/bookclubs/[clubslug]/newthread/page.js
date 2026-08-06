@@ -44,7 +44,7 @@ export default async function NewThreadPage({ params }) {
           <textarea name="description" rows="6" />
         </label>
 
-        <button type="submit">Create Message</button>
+        <button type="submit" className="primaryButton">Create Message</button>
       </form>
     </main>
   );

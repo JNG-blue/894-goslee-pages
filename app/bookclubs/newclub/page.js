@@ -35,7 +35,7 @@ export default function NewClubPage() {
         <input type="checkbox" name="private" />
 
         <p>
-          <button className={styles.clubButton}>Create</button>
+          <button className="primaryButton">Create</button>
         </p>
       </form>
     </main>

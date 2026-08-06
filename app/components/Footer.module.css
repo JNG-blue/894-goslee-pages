@@ -5,24 +5,7 @@
   padding: 12px 16px;
 }
 
-.goalButton {
-  border: 1px solid #111;
-  background: white;
-  color: #111;
-  border-radius: 4px;
-  padding: 6px 14px;
-  font: inherit;
-  cursor: pointer;
-  line-height: 1.1;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.goalButton:hover {
-  background: #f2f2f2;
-}
 
 .progress {
   font-size: 14px;
