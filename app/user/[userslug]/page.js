@@ -5,6 +5,12 @@ import { getCurrentUser, getCurrentUserId } from "@/app/actions.js";
 import styles from "./page.module.css";
 import { toggleFollow } from "@/app/user/[userslug]/actions.js";
 import TagBox from "@/app/components/TagBox";
+import { UnifrakturMaguntia } from "next/font/google";
+
+const avatarFont = UnifrakturMaguntia({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const db = new Database("./data/app.db");
 
@@ -94,9 +100,9 @@ async function getUserReadBooks(userId, page = 1, pageSize = 25) {
 }
 
   const TopTags = [
-    'history', "children's fiction", 'new york times bestseller' , 'juvenile fiction',  'biography',
+    'history', "children's fiction", 'new york times bestseller' , 'mystery',  'biography',
     'fantasy','science fiction', 'nonfiction','magic','psychology',
-    'science','philosophy','american literature','drama','literature',
+    'science','philosophy','american literature','romance','literature',
     'english literature','friendship', 'women','classic literature','families',
     ];
 
@@ -132,11 +138,11 @@ export default async function UserIdPage({ params }) {
   return (
     <main className={styles.page}>
       <section className={styles.profile}>
-        <div className={styles.avatar}>
-          {user.avatarUrl && (
-            <img src={user.avatarUrl} alt="" className={styles.image} />
-          )}
-        </div>
+<div className={styles.avatar} aria-label={`${user.displayName} avatar`}>
+  <span className={avatarFont.className}>
+    {user.displayName?.trim().charAt(0).toUpperCase() || "?"}
+  </span>
+</div>
 
         <div className={styles.identity}>
           <h2 className={styles.displayName}>{user.displayName}</h2>
@@ -153,7 +159,7 @@ export default async function UserIdPage({ params }) {
                 value={user.viewerFollows ? "true" : "false"}
               />
 
-              <button className={styles.followButton} type="submit">
+              <button className="primaryButton" type="submit">
                 {user.viewerFollows ? "Unfollow" : "Follow"}
               </button>
             </form>

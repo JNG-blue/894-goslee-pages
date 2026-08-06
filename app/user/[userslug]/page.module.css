@@ -70,14 +70,7 @@
 }
 
 .followButton {
-  width: 100%;
-  border: 0;
-  border-radius: 0.375rem;
-  background: #2563eb;
-  padding: 0.75rem 1.25rem;
-  color: white;
-  font-size: 1.125rem;
-  font-weight: 500;
+
 }
 
 .profileNote {
@@ -130,4 +123,28 @@
 .bookRating,
 .bookReview {
   font-size: 1.25rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--color-lavender);
+  color: #fffaf0;
+  border: 2px solid #d8b4fe;
+  position: relative;
+  overflow: hidden;
+    box-shadow:
+    inset 0 0 0 4px rgba(255, 250, 240, 0.45),
+    inset 0 0 0 8px rgba(216, 180, 254, 0.22),
+    0 10px 24px rgba(45, 39, 51, 0.28);
+}
+
+.avatar span {
+  font-size: 72px;
+  line-height: 1;
+  transform: translateY(2px);
+  text-shadow: 0 4px 14px rgba(45, 39, 51, 0.55);
 }
