@@ -84,7 +84,7 @@ export default async function Home() {
               <input type="password" name="password" />
             </label>
 
-            <button type="submit" className={styles.loginButton}>
+            <button type="submit" className="primaryButton">
               SIGN IN
             </button>
           </form>

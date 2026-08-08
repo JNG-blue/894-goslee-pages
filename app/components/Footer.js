@@ -1,6 +1,9 @@
 import styles from "./Footer.module.css";
 import Database from "better-sqlite3";
 import Link from "next/link";
+import {
+  logoutUser
+} from "@/app/actions.js";
 
 
 export default async function Footer({ user }) {
@@ -39,6 +42,13 @@ export default async function Footer({ user }) {
 
   return (
     <footer className={styles.footer}>
+
+<form action={logoutUser}>
+  <button type="submit" className="primaryButton">
+    Log Out
+  </button>
+</form>
+
   <Link href="/goals" className="primaryButton">
     {goal ? (
       <>
@@ -50,7 +60,7 @@ export default async function Footer({ user }) {
     ) : (
       <span className={styles.progress}>Set Goals</span>
     )}
-  </Link>
+  </Link> 
     </footer>
   );
 }

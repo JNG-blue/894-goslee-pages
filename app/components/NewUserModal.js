@@ -7,7 +7,7 @@ export default function NewUserModal({ createUser }) {
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)}>
+      <button type="button" className="primaryButton" onClick={() => setOpen(true)}>
         Create new account
       </button>
 
@@ -32,11 +32,11 @@ export default function NewUserModal({ createUser }) {
                 <input type="password" name="password" required />
               </label>
 
-              <button type="button" onClick={() => setOpen(false)}>
+              <button type="button" className="primaryButton" onClick={() => setOpen(false)}>
                 Cancel
               </button>
 
-              <button type="submit">Create Account</button>
+              <button className="primaryButton" type="submit">Create Account</button>
             </form>
           </div>
         </div>

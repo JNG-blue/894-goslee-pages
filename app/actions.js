@@ -122,3 +122,11 @@ export async function createUser(formData) {
 
   redirect("/books?type=browse");
 }
+
+export async function logoutUser() {
+  const cookieStore = await cookies();
+
+  cookieStore.delete("user_id");
+
+  redirect("/");
+}
