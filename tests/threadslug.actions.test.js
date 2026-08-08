@@ -29,6 +29,7 @@ function makeTestClub(isPublic) {
     .run(TEST_CLUB_NAME, "Temporary Vitest club", isPublic);
 
   const clubId = Number(result.lastInsertRowid);
+  testClubId = Number(result.lastInsertRowid);
 
   db.prepare(
     `
@@ -39,7 +40,7 @@ function makeTestClub(isPublic) {
     )
     VALUES (?, ?, ?)
     `
-  ).run(clubId, TEST_USER_ID, "admin");
+  ).run(testClubId, TEST_USER_ID, "admin");
 
   return clubId;
 }
@@ -94,7 +95,7 @@ afterEach(() => {
       `
     ).run(testClubId);
   }
-
+  db.prepare("DELETE FROM bookclubs WHERE name = ?").run(TEST_CLUB_NAME);
   testThreadId = null;
   testClubId = null;
 });
