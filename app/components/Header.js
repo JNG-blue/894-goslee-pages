@@ -6,6 +6,12 @@ import globalstyles from "@/app/globals.css"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaEnvelope } from "react-icons/fa";
+import { Metamorphous } from "next/font/google";
+
+const metamorphous = Metamorphous({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export default function Header({ user, invitationCount }) {
   const [query, setQuery] = useState("");
@@ -20,7 +26,7 @@ export default function Header({ user, invitationCount }) {
   return (
     <header className={styles.header}>
       <div className={styles.topRow}>
-        <Link href="/" className={styles.logo}>
+        <Link href="/" className={`${styles.logo} ${metamorphous.className}`}>
           PAGES
         </Link>
 
