@@ -6,6 +6,7 @@ import styles from "./page.module.css";
 import { toggleFollow } from "@/app/user/[userslug]/actions.js";
 import TagBox from "@/app/components/TagBox";
 import { UnifrakturMaguntia } from "next/font/google";
+import { FaDownload } from "react-icons/fa";
 
 const avatarFont = UnifrakturMaguntia({
   subsets: ["latin"],
@@ -189,9 +190,21 @@ export default async function UserIdPage({ params }) {
           </p>
         ) : (
           <>
-            <h3 className={styles.booksHeading}>
-              {user.displayName}&apos;s {readBooks.length} Read Books
-            </h3>
+          <hr />
+<h3 className={styles.booksHeading}>
+  <span>
+    {user.displayName}&apos;s {readBooks.length} Read Books
+  </span>
+
+<a
+  href={`/api/user/${user.id}/read-books`}
+  className="primaryButton"
+  aria-label="Download read books"
+  title="Download your read books to a csv file"
+>
+  <FaDownload />
+</a>
+</h3>
 
             <div className={styles.booksList}>
               {readBooks.map((book) => (
