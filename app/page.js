@@ -17,6 +17,7 @@ import Link from "next/link";
 export async function getRecentFriendRatings(userId) {
   const db = new Database("./data/app.db");
   const u = await getCurrentUserId();
+  console.log(u);
 
   return db
     .prepare(`
@@ -45,20 +46,50 @@ WHERE
   )
   AND ratings.readstatus = 1
       ORDER BY ratings.created_at DESC
-      LIMIT 40
+      LIMIT 20
     `)
     .all(u, u);
 }
 
+export async function getRecentRatings() {
+  const db = new Database("./data/app.db");
+  const u = await getCurrentUserId();
+  console.log(u);
+
+  return db
+    .prepare(`
+      SELECT
+        ratings.id AS rating_id,
+        ratings.rating,
+        ratings.review,
+        ratings.created_at,
+        books.id AS id,
+        books.title,
+        books.author,
+        books.cover_url,
+        users.id AS user_id,
+        users.display_name
+      FROM ratings
+      JOIN books ON books.id = ratings.book_id
+      JOIN users ON users.id = ratings.user_id
+      WHERE ratings.readstatus = 1
+      ORDER BY ratings.created_at DESC
+      LIMIT 20
+    `)
+    .all();
+}
+
+
 export default async function Home() {
   const userId = await getCurrentUserId();
-  const ratings = await getRecentFriendRatings();
+  let ratings = await getRecentFriendRatings();
+  if (userId == null) ratings = await getRecentRatings()
 
   return (
     <main className={styles.page}>
     
       <section className={styles.content}>
-        <h2>Activity</h2>
+        <h2>Recent Reading Activity</h2>
           {ratings.map((book) => (
             <FrontBook key={book.rating_id} book={book} />
           ))}
