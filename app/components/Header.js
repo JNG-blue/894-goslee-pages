@@ -31,16 +31,18 @@ export default function Header({ user, invitationCount }) {
         </Link>
 
         <div className={styles.searchArea}>
-          <div className={styles.userBar}>
-            <Link href={user?.id ? `/user/${user.id}` : "/"} className={styles.username}>
-              {user?.display_name ?? user?.username ?? "Sign in"}
-            </Link>
-            <Link href="/invitations" className={styles.mail}>
-              <FaEnvelope />
-              <span className={styles.badge}>{invitationCount > 0 ? invitationCount : "*"}</span>
-            </Link>
-          </div>
+        <div className={styles.userBar}>
+          <Link href={user?.id ? `/user/${user.id}` : "/"} className={styles.username}>
+            {user?.display_name ?? user?.username ?? "Sign in"}
+          </Link>
 
+          <Link href="/invitations" className={styles.mail}>
+            <FaEnvelope />
+            {invitationCount > 0 && (
+              <span className={styles.badge}>{invitationCount}</span>
+            )}
+          </Link>
+        </div>
           <form onSubmit={handleSubmit}>
             <input
               className={styles.search}
