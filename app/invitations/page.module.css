@@ -23,7 +23,7 @@
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  background: rgb(36, 5, 73);
+  
 }
 
 .invite p {
@@ -33,7 +33,7 @@
 
 .sent {
   opacity: 0.45;
-  background: #6a2f2f;
+
 }
 
 .actions {
